@@ -93,10 +93,15 @@ set_clock_transition 0.1 [get_clocks internal_clk]
 # Prevent false timing paths from external clk to internal_clk, if both exist
 set_clock_groups -asynchronous -group [get_clocks clk] -group [get_clocks internal_clk]
 # Ignore timing related to internal_clk selection mux options:
-set_false_path -from [get_ports {ui_in[0]}]
-set_false_path -from [get_ports {ui_in[1]}]
-set_false_path -from [get_ports {ui_in[2]}]
-set_false_path -from [get_ports {ui_in[3]}]
-set_false_path -from [get_ports {uio_in[0]}]
-set_false_path -from [get_ports {uio_in[1]}]
+set_false_path -from [get_ports {ui_in[0]}]     ;# clksel[0]
+set_false_path -from [get_ports {ui_in[1]}]     ;# clksel[1]
+set_false_path -from [get_ports {ui_in[2]}]     ;# clksel[2]
+set_false_path -from [get_ports {ui_in[3]}]     ;# clksel[3]
+set_false_path -from [get_ports {ui_in[5]}]     ;# mode[0]
+set_false_path -from [get_ports {ui_in[6]}]     ;# mode[1]
+set_false_path -from [get_ports {uio_in[0]}]    ;# clksel2[0]
+set_false_path -from [get_ports {uio_in[1]}]    ;# clksel2[1]
 set_false_path -from [get_ports {ena}]
+# Bit of a hack to avoid the fast ring-osc-based logic worrying about rst_n:
+set_multicycle_path 3 -from [get_ports rst_n] -to [get_registers *] -setup
+set_multicycle_path 2 -from [get_ports rst_n] -to [get_registers *] -hold
