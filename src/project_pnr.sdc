@@ -81,22 +81,23 @@ if { [info exists ::env(OPENLANE_SDC_IDEAL_CLOCKS)] && $::env(OPENLANE_SDC_IDEAL
     set_propagated_clock [all_clocks]
 }
 
-# ANTON:
-# Declare internal_clock as a primary clock at ~400 MHz.
-# Note that it is normally derived from a ring oscillator,
-# but could also come from a mux that selects the Tiny Tapeout "clk" input instead,
-# but we don't care about that for our constraints.
-create_clock -name internal_clk -period 2.5 [get_pins tt_um_algofoogle_vgaringosc/vgaringosc/workerclkbuff_notouch_/X]
-# Set clock uncertainty and transition estimates:
-set_clock_uncertainty 0.5 [get_clocks internal_clk]
-set_clock_transition 0.1 [get_clocks internal_clk]
-# Prevent false timing paths from external clk to internal_clk, if both exist
-set_clock_groups -asynchronous -group [get_clocks clk] -group [get_clocks internal_clk]
+# # ANTON:
+# # Declare internal_clock as a primary clock at ~400 MHz.
+# # Note that it is normally derived from a ring oscillator,
+# # but could also come from a mux that selects the Tiny Tapeout "clk" input instead,
+# # but we don't care about that for our constraints.
+# create_clock -name internal_clk -period 2.5 [get_pins tt_um_algofoogle_vgaringosc/vgaringosc/workerclkbuff_notouch_/X]
+# # Set clock uncertainty and transition estimates:
+# set_clock_uncertainty 0.5 [get_clocks internal_clk]
+# set_clock_transition 0.1 [get_clocks internal_clk]
+# # Prevent false timing paths from external clk to internal_clk, if both exist
+# set_clock_groups -asynchronous -group [get_clocks clk] -group [get_clocks internal_clk]
 # Ignore timing related to internal_clk selection mux options:
 set_false_path -from [get_ports {ui_in[0]}]     ;# clksel[0]
 set_false_path -from [get_ports {ui_in[1]}]     ;# clksel[1]
 set_false_path -from [get_ports {ui_in[2]}]     ;# clksel[2]
 set_false_path -from [get_ports {ui_in[3]}]     ;# clksel[3]
+set_false_path -from [get_ports {ui_in[4]}]     ;# altclk
 set_false_path -from [get_ports {ui_in[5]}]     ;# mode[0]
 set_false_path -from [get_ports {ui_in[6]}]     ;# mode[1]
 set_false_path -from [get_ports {ui_in[7]}]     ;# vga_mode
