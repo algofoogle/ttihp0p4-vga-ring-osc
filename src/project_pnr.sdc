@@ -99,9 +99,10 @@ set_false_path -from [get_ports {ui_in[2]}]     ;# clksel[2]
 set_false_path -from [get_ports {ui_in[3]}]     ;# clksel[3]
 set_false_path -from [get_ports {ui_in[5]}]     ;# mode[0]
 set_false_path -from [get_ports {ui_in[6]}]     ;# mode[1]
+set_false_path -from [get_ports {ui_in[7]}]     ;# vga_mode
 set_false_path -from [get_ports {uio_in[0]}]    ;# clksel2[0]
 set_false_path -from [get_ports {uio_in[1]}]    ;# clksel2[1]
 set_false_path -from [get_ports {ena}]
 # Bit of a hack to avoid the fast ring-osc-based logic worrying about rst_n:
-set_multicycle_path 3 -from [get_ports rst_n] -to [get_registers *] -setup
-set_multicycle_path 2 -from [get_ports rst_n] -to [get_registers *] -hold
+set_multicycle_path 3 -from [get_ports rst_n] -setup
+set_multicycle_path 2 -from [get_ports rst_n] -hold
