@@ -4,8 +4,9 @@
  */
 
 `default_nettype none
+//`timescale 1ns / 1ps
 
-module tt_um_algofoogle_toy1 (
+module tt_um_algofoogle_vgaringosc (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -16,12 +17,32 @@ module tt_um_algofoogle_toy1 (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
-
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{uio_in[7:2], 1'b0};
+
+  vgaringosc vgaringosc(
+    .ena          (ena),
+    .clk          (clk),
+    .reset_n      (rst_n),
+    .vga_mode     (ui_in[7]),
+    .worker_mode  (ui_in[6:5]),
+    .altclk       (ui_in[4]),
+    .clksel       (ui_in[3:0]),
+    .clksel2      (uio_in[1:0]),
+    .oscdiv       (uio_out[7:4]),
+    .hsync_n      (uo_out[7]),
+    .vsync_n      (uo_out[3]),
+    .rgb          ({
+                    uo_out[0],uo_out[4],  // Rr.
+                    uo_out[1],uo_out[5],  // Gg.
+                    uo_out[2],uo_out[6]   // Bb.
+                  })
+  );
+
+  assign uio_oe[7:4] = 4'b1111; // OUT: oscdiv[3:0]
+  assign uio_oe[3:0] = 4'b0000;
+  assign uio_out[3:0] = 0;
 
 endmodule
+
+
