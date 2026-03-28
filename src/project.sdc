@@ -82,13 +82,20 @@ if { [info exists ::env(OPENLANE_SDC_IDEAL_CLOCKS)] && $::env(OPENLANE_SDC_IDEAL
 }
 
 # ANTON:
-# Declare internal_clock as a primary clock at ~1 GHz.
+# Declare internal_clock as a primary clock at ~400 MHz.
 # Note that it is normally derived from a ring oscillator,
 # but could also come from a mux that selects the Tiny Tapeout "clk" input instead,
 # but we don't care about that for our constraints.
-create_clock -name internal_clk -period 1.0 [get_pins tt_um_algofoogle_vgaringosc/vgaringosc/workerclkbuff_notouch_/X]
+create_clock -name internal_clk -period 2.5 [get_pins tt_um_algofoogle_vgaringosc/vgaringosc/workerclkbuff_notouch_/X]
 # Set clock uncertainty and transition estimates:
 set_clock_uncertainty 0.5 [get_clocks internal_clk]
 set_clock_transition 0.1 [get_clocks internal_clk]
 # Prevent false timing paths from external clk to internal_clk, if both exist
 set_clock_groups -asynchronous -group [get_clocks clk] -group [get_clocks internal_clk]
+# Ignore timing related to internal_clk selection mux options:
+set_false_path -from [get_ports {ui_in[0]}]
+set_false_path -from [get_ports {ui_in[1]}]
+set_false_path -from [get_ports {ui_in[2]}]
+set_false_path -from [get_ports {ui_in[3]}]
+set_false_path -from [get_ports {uio_in[0]}]
+set_false_path -from [get_ports {uio_in[1]}]
