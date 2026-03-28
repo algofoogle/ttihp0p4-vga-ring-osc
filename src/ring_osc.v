@@ -81,23 +81,23 @@ module tapped_ring #(
 
     assign y = ena && chain[tap];
 
-    (* keep_hierarchy *) inverter_cell         head ( .a(y),         .y(ring_head) ); // If all the counts below are even, this makes it odd.
-    (* keep_hierarchy *) inv_chain #(.N(TAP00)) c00 ( .a(ring_head), .y(chain[ 0]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP01)) c01 ( .a(chain[ 0]), .y(chain[ 1]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP02)) c02 ( .a(chain[ 1]), .y(chain[ 2]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP03)) c03 ( .a(chain[ 2]), .y(chain[ 3]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP04)) c04 ( .a(chain[ 3]), .y(chain[ 4]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP05)) c05 ( .a(chain[ 4]), .y(chain[ 5]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP06)) c06 ( .a(chain[ 5]), .y(chain[ 6]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP07)) c07 ( .a(chain[ 6]), .y(chain[ 7]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP08)) c08 ( .a(chain[ 7]), .y(chain[ 8]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP09)) c09 ( .a(chain[ 8]), .y(chain[ 9]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP10)) c10 ( .a(chain[ 9]), .y(chain[10]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP11)) c11 ( .a(chain[10]), .y(chain[11]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP12)) c12 ( .a(chain[11]), .y(chain[12]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP13)) c13 ( .a(chain[12]), .y(chain[13]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP14)) c14 ( .a(chain[13]), .y(chain[14]) );
-    (* keep_hierarchy *) inv_chain #(.N(TAP15)) c15 ( .a(chain[14]), .y(chain[15]) );
+    inverter_cell         head ( .a(y),         .y(ring_head) ); // If all the counts below are even, this makes it odd.
+    inv_chain #(.N(TAP00)) c00 ( .a(ring_head), .y(chain[ 0]) );
+    inv_chain #(.N(TAP01)) c01 ( .a(chain[ 0]), .y(chain[ 1]) );
+    inv_chain #(.N(TAP02)) c02 ( .a(chain[ 1]), .y(chain[ 2]) );
+    inv_chain #(.N(TAP03)) c03 ( .a(chain[ 2]), .y(chain[ 3]) );
+    inv_chain #(.N(TAP04)) c04 ( .a(chain[ 3]), .y(chain[ 4]) );
+    inv_chain #(.N(TAP05)) c05 ( .a(chain[ 4]), .y(chain[ 5]) );
+    inv_chain #(.N(TAP06)) c06 ( .a(chain[ 5]), .y(chain[ 6]) );
+    inv_chain #(.N(TAP07)) c07 ( .a(chain[ 6]), .y(chain[ 7]) );
+    inv_chain #(.N(TAP08)) c08 ( .a(chain[ 7]), .y(chain[ 8]) );
+    inv_chain #(.N(TAP09)) c09 ( .a(chain[ 8]), .y(chain[ 9]) );
+    inv_chain #(.N(TAP10)) c10 ( .a(chain[ 9]), .y(chain[10]) );
+    inv_chain #(.N(TAP11)) c11 ( .a(chain[10]), .y(chain[11]) );
+    inv_chain #(.N(TAP12)) c12 ( .a(chain[11]), .y(chain[12]) );
+    inv_chain #(.N(TAP13)) c13 ( .a(chain[12]), .y(chain[13]) );
+    inv_chain #(.N(TAP14)) c14 ( .a(chain[13]), .y(chain[14]) );
+    inv_chain #(.N(TAP15)) c15 ( .a(chain[14]), .y(chain[15]) );
 endmodule
 
 // Just a short, fixed ring: by default, 25 instances of inv_2:

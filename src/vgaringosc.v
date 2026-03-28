@@ -97,13 +97,13 @@ module vgaringosc(
     );
 
     // Alternate fixed ring oscillator of 25x inv1:
-    ringosc_inv2 #(.N(5)) ro_inv2(
+    ringosc_inv2 #(.N(25)) ro_inv2(
         .ena        (ring_ena && altring1),
         .y          (ring_clk2x5)
     );
 
     // Alternate fixed ring oscillator of 25x inv4:
-    ringosc_inv4 #(.N(5)) ro_inv4(
+    ringosc_inv4 #(.N(25)) ro_inv4(
         .ena        (ring_ena && altring4),
         .y          (ring_clk4x5)
     );
